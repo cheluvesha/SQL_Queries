@@ -1,0 +1,218 @@
+https://www.w3schools.com/sql/sql_intro.asp
+
+
+SQL is a structured query language used for storing, manipulating and retrieving data in databases.
+
+1]Retrive Queries.
+	
+SELECT * FROM Customers;
+
+SELECT COL1,COL2
+FROM Customers;
+
+SELECT DISTINCT COL1,COL2
+FROM Customers
+
+SELECT COL1,COL2
+FROM Customers
+WHERE COL1 = "Max";
+
+SELECT * FROM Customers
+ORDER BY Country;
+
+SELECT * FROM Customers
+ORDER BY Country DESC;
+
+2] Null Operator
+
+SELECT CustomerName, ContactName, Address
+FROM Customers
+WHERE Address IS NULL;
+
+SELECT CustomerName, ContactName, Address
+FROM Customers
+WHERE Address IS NOT  NULL;
+
+
+
+SELECT * FROM Customers
+LIMIT 3;
+
+
+SELECT MIN(Price) AS SmallestPrice
+FROM Products;
+
+SELECT MAX(Price) AS SmallestPrice
+FROM Products;
+
+SELECT COUNT(ProductID)
+FROM Products;
+
+SELECT SUM(Quantity)
+FROM OrderDetails;
+
+SELECT AVG(Price)
+FROM Products;
+
+3] Like and WildCards
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '_%a';
+
+SELECT * FROM Customers
+WHERE City LIKE '[bsp]%';
+
+SELECT * FROM Customers
+WHERE City LIKE '[a-c]%';
+
+SELECT * FROM Customers
+WHERE City LIKE '[!bsp]%';
+
+SELECT * FROM Customers
+WHERE City NOT LIKE '[bsp]%';
+
+4] IN 
+
+SELECT * FROM Customers
+WHERE Country IN ('Germany', 'France', 'UK');
+
+SELECT * FROM Customers
+WHERE Country NOT IN ('Germany', 'France', 'UK');
+
+SELECT * FROM Customers
+WHERE Country IN (SELECT Country FROM Suppliers);
+
+5] BETWEEN 
+
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;
+
+SELECT * FROM Products
+WHERE Price NOT BETWEEN 10 AND 20;
+
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20
+AND CategoryID NOT IN (1,2,3);
+
+SELECT * FROM Products
+WHERE ProductName BETWEEN "Carnarvon Tigers" AND "Chef Anton's Cajun Seasoning"
+ORDER BY ProductName;
+
+SELECT * FROM Products
+WHERE ProductName NOT BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
+ORDER BY ProductName;
+
+
+
+5] ALIASES
+
+SELECT CustomerID AS ID, CustomerName AS Customer
+FROM Customers;
+
+
+SELECT CustomerID, CustomerName AS Customer
+FROM Customers AS 'Customers one";
+
+
+SELECT o.OrderID, o.OrderDate, c.CustomerName
+FROM Customers AS c, Orders AS o
+WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+
+SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName
+FROM Customers, Orders
+WHERE Customers.CustomerName='Around the Horn' AND Customers.CustomerID=Orders.CustomerID;
+
+6] Joins
+
+The INNER JOIN keyword selects records that have matching values in both tables.
+
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+
+The LEFT JOIN keyword returns all records from the left table (table1), and the matched records from the right table (table2). The result is NULL from the right side, if there is no match.
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+
+The RIGHT JOIN keyword returns all records from the right table (table2), and the matched records from the left table (table1). The result is NULL from the left side, when there is no match.
+
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+A self JOIN is a regular join, but the table is joined with itself.
+
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;
+
+
+
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;
+
+
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;
+
+
+SELECT City, Country FROM Customers
+WHERE Country='Germany'
+UNION
+SELECT City, Country FROM Suppliers
+WHERE Country='Germany'
+ORDER BY City;
+
+
+6] GROUP BY - used with aggregate functions
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;
+
+SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName
+
+7] HAVING
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
+
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) DESC;
+
+
+
