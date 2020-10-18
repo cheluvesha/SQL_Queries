@@ -170,26 +170,6 @@ ORDER BY A.City;
 
 
 
-SELECT City FROM Customers
-UNION
-SELECT City FROM Suppliers
-ORDER BY City;
-
-
-SELECT City FROM Customers
-UNION ALL
-SELECT City FROM Suppliers
-ORDER BY City;
-
-
-SELECT City, Country FROM Customers
-WHERE Country='Germany'
-UNION
-SELECT City, Country FROM Suppliers
-WHERE Country='Germany'
-ORDER BY City;
-
-
 6] GROUP BY - used with aggregate functions
 
 SELECT COUNT(CustomerID), Country
@@ -214,5 +194,199 @@ GROUP BY Country
 HAVING COUNT(CustomerID) > 5
 ORDER BY COUNT(CustomerID) DESC;
 
+
+8] SET
+
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;
+
+
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;
+
+
+SELECT City, Country FROM Customers
+WHERE Country='Germany'
+UNION
+SELECT City, Country FROM Suppliers
+WHERE Country='Germany'
+ORDER BY City;
+
+SELECT City, Country FROM Customers
+WHERE City = 'Poland'
+INTERSECT
+SELECT City FROM Orders
+ORDEr BY City;
+
+ 
+SELECT City, Country FROM Customers
+WHERE City = 'Poland'
+MINUS
+SELECT City FROM Orders
+ORDEr BY City;
+
+9] DDL  DML  DQL
+
+DML :
+
+INSERT INTO Customers(FirstName,LastName,City)
+Values ('CHELUVESHA','B','Bangalore')
+
+INSERT INTO Customers
+Values ('SHIVA','RAJU','Bangalore','India')
+
+
+UPDATE Customers
+SET LastName = 'VESHA'
+WHERE FirstName = 'CHELUVESHA' AND City = 'Bangalore';
+
+
+UPDATE Students
+SET USN = 007, Department = 'ECE"
+WHERE USN = 009;
+
+DELETE FROM Students 
+WHERE USN = 007;
+
+DELETE FROM Students
+WHERE USN IN (007,008,009);
+
+DDL:
+
+CREATE Table StudentsCOPY
+AS
+SELECT * FROM Students;
+
+
+CREATE Table Students1COPY
+AS
+SELECT * FROM Students
+WHERE USN = 007;
+
+ALTER Table Students1COPY
+DROP COLUMN USN;
+
+RENAME Students1COPY to CHELUVESHA;
+
+ALTER Table CHELUVESHA
+ADD (Phone Number(10) UNIQUE,
+	Email VARCHAR(34) UNIQUE);
+
+DROP Table CHELUVESHA;
+
+
+DQL :
+
+SELECT FirstName 
+FROM CHELUVESHA;
+
+
+10] SubQuery
+
+SELECT Salary 
+FROM (SELECT Distinct Salary
+	FROM EMPLOYEES
+	ORDER BY Salary DESC)
+WHERE LIMIT 2;
+
+SELECT MIN(Salary)
+FROM (SELECT DISTINCT Salary
+	FROM EMPLOYEES
+	ORDER BY Salary DESC)
+WHERE LIMIT 4
+UNION
+SELECT MIN(Salary)
+FROM (SELECT DISTINCT Salary
+	FROM EMPLOYEES
+	ORDER BY Salary DESC)
+WHERE LIMIT 8;
+
+
+11] VIews 
+
+CREATE VIEW DEPARTMENT
+AS
+SELECT * FROM Students
+WHERE DEPART_ID = 'ECE';
+
+
+DROP VIEW DEPARTMENT
+
+
+12] CASE
+
+SELECT OrderID, Quantity,
+CASE WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+WHEN Quantity = 30 THEN 'The quantity is 30'
+ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;
+
+SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
+
+13] Stored Procedure
+
+CREATE PROCEDURE SelectAllCustomers
+AS
+SELECT * FROM Customers
+GO;
+
+EXEC SelectAllCustomers;
+
+
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)
+AS
+SELECT * FROM Customers WHERE City = @City
+GO;
+
+EXEC SelectAllCustomers @City = 'London';
+
+
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
+AS
+SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
+GO;
+
+EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP';
+
+
+14] Comments
+
+--Select all:
+SELECT * FROM Customers;
+
+15] INDEX 
+
+CREATE INDEX idx_lastname
+ON Persons (LastName);
+
+CREATE INDEX idx_pname
+ON Persons (LastName, FirstName); 
+
+
+16] Loops
+
+DECLARE 
+   i number(1); 
+   j number(1); 
+BEGIN 
+   << outer_loop >> 
+   FOR i IN 1..3 LOOP 
+      << inner_loop >> 
+      FOR j IN 1..3 LOOP 
+         dbms_output.put_line('i is: '|| i || ' and j is: ' || j); 
+      END loop inner_loop; 
+   END loop outer_loop; 
+END; 
 
 
