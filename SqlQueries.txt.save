@@ -169,21 +169,7 @@ AND A.City = B.City
 ORDER BY A.City;
 
 
-DELETE customers 
-FROM customers
-        LEFT JOIN
-    orders ON customers.customerNumber = orders.customerNumber 
-WHERE
-    orderNumber IS NULL;
 
-
-UPDATE employees
-        LEFT JOIN
-    merits ON employees.performance = merits.performance 
-SET 
-    salary = salary + salary * 0.015
-WHERE
-    merits.percentage IS NULL;
 6] GROUP BY - used with aggregate functions
 
 SELECT COUNT(CustomerID), Country
@@ -331,6 +317,18 @@ WHERE DEPART_ID = 'ECE';
 DROP VIEW DEPARTMENT
 
 
+CREATE VIEW [Brazil Customers] AS
+SELECT CustomerName, ContactName
+FROM Customers
+WHERE Country = 'Brazil';
+
+SELECT * FROM [Brazil Customers];
+
+CREATE VIEW [Products Above Average Price] AS
+SELECT ProductName, Price
+FROM Products
+WHERE Price > (SELECT AVG(Price) FROM Products);
+
 12] CASE
 
 SELECT OrderID, Quantity,
@@ -379,19 +377,19 @@ EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP';
 --Select all:
 SELECT * FROM Customers;
 
-15] INDEX 
+15] Index
 
 CREATE INDEX idx_lastname
 ON Persons (LastName);
 
-CREATE INDEX idx_pname
-ON Persons (LastName, FirstName); 
-
+CREATE INDEX id_Name
+ON Persons (FirstName,LastName);
 
 16] Loops
 
+
 DECLARE 
-   i number(1); 
+    number(1); 
    j number(1); 
 BEGIN 
    << outer_loop >> 
@@ -401,48 +399,4 @@ BEGIN
          dbms_output.put_line('i is: '|| i || ' and j is: ' || j); 
       END loop inner_loop; 
    END loop outer_loop; 
-END; 
-
-DECLARE @Counter INT 
-SET @Counter=1
-WHILE ( @Counter <= 10)
-BEGIN
-    PRINT 'The counter value is = ' + CONVERT(VARCHAR,@Counter)
-    SET @Counter  = @Counter  + 1
-END
-
-
-17] Cursors
-
-DECLARE  
-   total_rows number(2); 
-BEGIN 
-   UPDATE customers 
-   SET salary = salary + 500; 
-   IF sql%notfound THEN 
-      dbms_output.put_line('no customers selected'); 
-   ELSIF sql%found THEN 
-      total_rows := sql%rowcount;
-      dbms_output.put_line( total_rows || ' customers selected '); 
-   END IF;  
-END; 
-
-Explicit Cursors
-
-DECLARE 
-   c_id customers.id%type; 
-   c_name customer.name%type; 
-   c_addr customers.address%type; 
-   CURSOR c_customers is 
-      SELECT id, name, address FROM customers; 
-BEGIN 
-   OPEN c_customers; 
-   LOOP 
-   FETCH c_customers into c_id, c_name, c_addr; 
-      EXIT WHEN c_customers%notfound; 
-      dbms_output.put_line(c_id || ' ' || c_name || ' ' || c_addr); 
-   END LOOP; 
-   CLOSE c_customers; 
-END; 
-
-
+END;
