@@ -482,3 +482,40 @@ SELECT CURDATE();
 
 
 SELECT DATEDIFF('1997-12-31 23:59:59','1997-12-30');
+
+20] String Functions:
+
+SELECT 'Geeks' || ' ' || 'forGeeks' FROM dual;
+
+SELECT char_length('Hello!');
+
+SELECT FIND_IN_SET('b', 'a, b, c, d, e, f');
+
+INSTR('geeks for geeks', 'e');
+
+INSTR('geeks for geeks', 'e', 1, 2 );
+
+LENGTH('GeeksForGeeks');
+
+SELECT LOWER('GEEKSFORGEEKS.ORG');
+
+LPAD('geeks', 8, '0');
+
+LTRIM('123123geeks', '123');
+
+ Mid ("geeksforgeeks", 6, 2);
+
+
+SELECT POSITION('e' IN 'geeksforgeeks');
+
+ REPLACE('123geeks123', '123');
+
+RPAD('geeks', 8, '0');
+
+RTRIM('geeksxyxzyyy', 'xyz');
+
+SUBSTR('geeksforgeeks', 1, 5);
+
+UCASE ("GeeksForGeeks");
+
+TRIM(LEADING '0' FROM '000123');
