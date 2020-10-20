@@ -184,6 +184,20 @@ SET
     salary = salary + salary * 0.015
 WHERE
     merits.percentage IS NULL;
+
+INSERT INTO  authorinfo 
+SELECT book_mast.aut_id,book_mast.book_name,author.aut_name,author.country 
+FROM book_mast 
+LEFT JOIN author
+ON book_mast.aut_id=author.aut_id;
+
+DELETE t1,t2 FROM t1
+        INNER JOIN
+    t2 ON t2.ref = t1.id 
+WHERE
+    t1.id = 1;
+
+
 6] GROUP BY - used with aggregate functions
 
 SELECT COUNT(CustomerID), Country
@@ -447,3 +461,24 @@ BEGIN
 END; 
 
 
+18] TRIGGERS
+
+create trigger stud_marks 
+before INSERT 
+on 
+Student 
+for each row 
+set Student.total = Student.subj1 + Student.subj2 + Student.subj3, Student.per = Student.total * 60 / 100;
+
+
+19] DATE
+
+SELECT DATE_ADD('1998-01-02', INTERVAL 31 DAY);
+
+SELECT ADDDATE('1998-01-02', 31);
+
+
+SELECT CURDATE();
+
+
+SELECT DATEDIFF('1997-12-31 23:59:59','1997-12-30');
