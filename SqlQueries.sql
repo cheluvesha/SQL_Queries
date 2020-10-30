@@ -1,9 +1,9 @@
-https://www.w3schools.com/sql/sql_intro.asp
+--https://www.w3schools.com/sql/sql_intro.asp
 
 
-SQL is a structured query language used for storing, manipulating and retrieving data in databases.
+--SQL is a structured query language used for storing, manipulating and retrieving data in databases.
 
-1]Retrive Queries.
+--1]Retrive Queries.
 	
 SELECT * FROM Customers;
 
@@ -23,7 +23,7 @@ ORDER BY Country;
 SELECT * FROM Customers
 ORDER BY Country DESC;
 
-2] Null Operator
+--2] Null Operator
 
 SELECT CustomerName, ContactName, Address
 FROM Customers
@@ -54,7 +54,7 @@ FROM OrderDetails;
 SELECT AVG(Price)
 FROM Products;
 
-3] Like and WildCards
+--3] Like and WildCards
 
 SELECT * FROM Customers
 WHERE CustomerName LIKE 'a%';
@@ -74,7 +74,7 @@ WHERE City LIKE '[!bsp]%';
 SELECT * FROM Customers
 WHERE City NOT LIKE '[bsp]%';
 
-4] IN 
+--4] IN 
 
 SELECT * FROM Customers
 WHERE Country IN ('Germany', 'France', 'UK');
@@ -85,7 +85,7 @@ WHERE Country NOT IN ('Germany', 'France', 'UK');
 SELECT * FROM Customers
 WHERE Country IN (SELECT Country FROM Suppliers);
 
-5] BETWEEN 
+--5] BETWEEN 
 
 SELECT * FROM Products
 WHERE Price BETWEEN 10 AND 20;
@@ -107,7 +107,7 @@ ORDER BY ProductName;
 
 
 
-5] ALIASES
+--5] ALIASES
 
 SELECT CustomerID AS ID, CustomerName AS Customer
 FROM Customers;
@@ -125,7 +125,7 @@ SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName
 FROM Customers, Orders
 WHERE Customers.CustomerName='Around the Horn' AND Customers.CustomerID=Orders.CustomerID;
 
-6] Joins
+--6] Joins
 
 The INNER JOIN keyword selects records that have matching values in both tables.
 
@@ -198,7 +198,7 @@ WHERE
     t1.id = 1;
 
 
-6] GROUP BY - used with aggregate functions
+--6] GROUP BY - used with aggregate functions
 
 SELECT COUNT(CustomerID), Country
 FROM Customers
@@ -208,7 +208,7 @@ SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
 LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
 GROUP BY ShipperName
 
-7] HAVING
+--7] HAVING
 
 SELECT COUNT(CustomerID), Country
 FROM Customers
@@ -223,7 +223,7 @@ HAVING COUNT(CustomerID) > 5
 ORDER BY COUNT(CustomerID) DESC;
 
 
-8] SET
+--8] SET
 
 SELECT City FROM Customers
 UNION
@@ -255,11 +255,11 @@ SELECT City, Country FROM Customers
 WHERE City = 'Poland'
 MINUS
 SELECT City FROM Orders
-ORDEr BY City;
+ORDER BY City;
 
-9] DDL  DML  DQL
+--9] DDL  DML  DQL
 
-DML :
+--DML :
 
 INSERT INTO Customers(FirstName,LastName,City)
 Values ('CHELUVESHA','B','Bangalore')
@@ -283,7 +283,7 @@ WHERE USN = 007;
 DELETE FROM Students
 WHERE USN IN (007,008,009);
 
-DDL:
+--DDL:
 
 CREATE Table StudentsCOPY
 AS
@@ -307,13 +307,13 @@ ADD (Phone Number(10) UNIQUE,
 DROP Table CHELUVESHA;
 
 
-DQL :
+--DQL :
 
 SELECT FirstName 
 FROM CHELUVESHA;
 
 
-10] SubQuery
+--10] SubQuery
 
 SELECT Salary 
 FROM (SELECT Distinct Salary
@@ -334,7 +334,7 @@ FROM (SELECT DISTINCT Salary
 WHERE LIMIT 8;
 
 
-11] VIews 
+--11] VIews 
 
 CREATE VIEW DEPARTMENT
 AS
@@ -345,7 +345,7 @@ WHERE DEPART_ID = 'ECE';
 DROP VIEW DEPARTMENT
 
 
-12] CASE
+--12] CASE
 
 SELECT OrderID, Quantity,
 CASE WHEN Quantity > 30 THEN 'The quantity is greater than 30'
@@ -362,7 +362,7 @@ ORDER BY
     ELSE City
 END);
 
-13] Stored Procedure
+--13] Stored Procedure
 
 CREATE PROCEDURE SelectAllCustomers
 AS
@@ -388,12 +388,12 @@ GO;
 EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP';
 
 
-14] Comments
+--14] Comments
 
 --Select all:
 SELECT * FROM Customers;
 
-15] INDEX 
+--15] INDEX 
 
 CREATE INDEX idx_lastname
 ON Persons (LastName);
@@ -402,7 +402,7 @@ CREATE INDEX idx_pname
 ON Persons (LastName, FirstName); 
 
 
-16] Loops
+--16] Loops
 
 DECLARE 
    i number(1); 
@@ -426,7 +426,7 @@ BEGIN
 END
 
 
-17] Cursors
+--17] Cursors
 
 DECLARE  
    total_rows number(2); 
@@ -461,7 +461,7 @@ BEGIN
 END; 
 
 
-18] TRIGGERS
+--18] TRIGGERS
 
 create trigger stud_marks 
 before INSERT 
@@ -471,7 +471,7 @@ for each row
 set Student.total = Student.subj1 + Student.subj2 + Student.subj3, Student.per = Student.total * 60 / 100;
 
 
-19] DATE
+--19] DATE
 
 SELECT DATE_ADD('1998-01-02', INTERVAL 31 DAY);
 
@@ -483,7 +483,7 @@ SELECT CURDATE();
 
 SELECT DATEDIFF('1997-12-31 23:59:59','1997-12-30');
 
-20] String Functions:
+--20] String Functions:
 
 SELECT 'Geeks' || ' ' || 'forGeeks' FROM dual;
 
